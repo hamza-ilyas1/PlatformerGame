@@ -3,46 +3,39 @@ package inputs;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import gamestates.Gamestate;
 import main.GamePanel;
 
 public class KeyboardInputs implements KeyListener {
-	
+
 	private GamePanel gamePanel;
-	
-	public KeyboardInputs (GamePanel gamePanel) {
+
+	public KeyboardInputs(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
+	}
+
+	@SuppressWarnings("incomplete-switch")
+	@Override
+	public void keyReleased(KeyEvent e) {
+		switch (Gamestate.state) {
+		case MENU -> gamePanel.getGame().getMenu().keyReleased(e);
+		case PLAYING -> gamePanel.getGame().getPlaying().keyReleased(e);
+		case CREDITS -> gamePanel.getGame().getCredits().keyReleased(e);
+		}
+	}
+
+	@SuppressWarnings("incomplete-switch")
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch (Gamestate.state) {
+		case MENU -> gamePanel.getGame().getMenu().keyPressed(e);
+		case PLAYING -> gamePanel.getGame().getPlaying().keyPressed(e);
+		case OPTIONS -> gamePanel.getGame().getGameOptions().keyPressed(e);
+		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		// Not In Use
 	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()) {
-		
-		case KeyEvent.VK_W:
-			gamePanel.changeYDelta(-5);
-			break;
-		case KeyEvent.VK_A:
-			gamePanel.changeXDelta(-5);
-			break;
-		case KeyEvent.VK_S:
-			gamePanel.changeYDelta(5);
-			break;
-		case KeyEvent.VK_D:
-			gamePanel.changeXDelta(5);
-			break;
-		}
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
